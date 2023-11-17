@@ -7,6 +7,10 @@ const multer = require("multer");
 
 const app = express();
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "images");
@@ -29,9 +33,8 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const PORT = 8080;
-const URI =
-    "mongodb+srv://john404:Ze90WgU0xj09zOBD@cluster0.ywv2hlr.mongodb.net/posts";
+const PORT = process.env.PORT;
+const URI = process.env.URI;
 
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
