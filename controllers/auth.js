@@ -4,12 +4,18 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 function errorHandler(error, next) {
     if (!error.statusCode) {
         error.statusCode = 500;
     }
     return next(error);
 }
+
+const SECRET = process.env.SECRET;
 
 exports.signup = async (req, res, next) => {
     try {
@@ -64,7 +70,7 @@ exports.login = async (req, res, next) => {
                 email: loadedUser.email,
                 userId: loadedUser._id.toString(),
             },
-            "Secretm1GZBGbXy0Vf6sDr",
+            SECRET,
             { expiresIn: "1h" }
         );
         res.status(200).json({ token, userId: loadedUser._id.toString() });
